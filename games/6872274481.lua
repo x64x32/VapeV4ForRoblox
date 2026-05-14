@@ -2070,6 +2070,7 @@ run(function()
 	local AnimationMode
 	local AnimationSpeed
 	local AnimationTween
+	local AttackableCheck
 	local Limit
 	local LegitAura = {}
 	local Particles, Boxes = {}, {}
@@ -2087,6 +2088,10 @@ run(function()
 		if GUI.Enabled then
 			if bedwars.AppController:isLayerOpen(bedwars.UILayers.MAIN) then return false end
 		end
+
+		if AttackableCheck.Enabled then 
+            if (lplr.Character:GetAttribute('StunnedUntilTime') or 0) - workspace:GetServerTimeNow() > 0 then return false end
+        end
 
 		local sword = Limit.Enabled and store.hand or store.tools.sword
 		if not sword or not sword.tool then return false end
@@ -2527,6 +2532,10 @@ run(function()
 		Darker = true,
 		Visible = false
 	})
+	AttackableCheck = Killaura:CreateToggle({
+		Name = 'Attackable Check',
+		Tooltip = 'Checks if the target is possible to be attacked'
+	})
 	Limit = Killaura:CreateToggle({
 		Name = 'Limit to items',
 		Function = function(callback)
@@ -2538,10 +2547,10 @@ run(function()
 		end,
 		Tooltip = 'Only attacks when the sword is held'
 	})
-	--[[LegitAura = Killaura:CreateToggle({
+	LegitAura = Killaura:CreateToggle({
 		Name = 'Swing only',
 		Tooltip = 'Only attacks while swinging manually'
-	})]]
+	})
 end)
 	
 run(function()
