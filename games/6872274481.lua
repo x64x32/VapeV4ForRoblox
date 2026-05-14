@@ -2901,6 +2901,8 @@ run(function()
 	local Targets
 	local FOV
 	local OtherProjectiles
+	local Blacklist
+	local FullCharge
 	local rayCheck = RaycastParams.new()
 	rayCheck.FilterType = Enum.RaycastFilterType.Include
 	rayCheck.FilterDescendantsInstances = {workspace:FindFirstChild('Map')}
@@ -2931,6 +2933,10 @@ run(function()
 						if (not OtherProjectiles.Enabled) and not projmeta.projectile:find('arrow') then
 							return old(...)
 						end
+
+						if table.find(Blacklist.ListEnabled or {}, projmeta.projectile) then
+                            return old(...)
+                        end
 	
 						local meta = projmeta:getProjectileMeta()
 						local lifetime = (worldmeta and meta.predictionLifetimeSec or meta.lifetimeSec or 3)
@@ -2965,7 +2971,7 @@ run(function()
 								positionFrom = offsetpos,
 								deltaT = lifetime,
 								gravitationalAcceleration = gravity,
-								drawDurationSeconds = 5
+								drawDurationSeconds = FullCharge.Enabled and 6 or projmeta.drawDurationSeconds
 							}
 						end
 					end
@@ -2996,6 +3002,14 @@ run(function()
 		Name = 'Other Projectiles',
 		Default = true
 	})
+	FullCharge = ProjectileAimbot:CreateToggle({
+        Name = 'Full Charge',
+        Default = false,
+    })
+    Blacklist = ProjectileAimbot:CreateTextList({
+        Name = 'Blacklist',
+        Default = {'Telepearl', 'Gloop'}
+    })
 end)
 	
 run(function()
