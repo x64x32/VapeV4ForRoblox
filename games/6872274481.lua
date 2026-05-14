@@ -3005,6 +3005,7 @@ run(function()
 	FullCharge = ProjectileAimbot:CreateToggle({
         Name = 'Full Charge',
         Default = false,
+		Tooltip = 'Automatically fully charges projectiles to do more damage'
     })
     Blacklist = ProjectileAimbot:CreateTextList({
         Name = 'Blacklist',
@@ -8513,4 +8514,3 @@ run(function()
 		List = WinEffectName
 	})
 end)
-	
