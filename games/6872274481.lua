@@ -3009,7 +3009,7 @@ run(function()
     })
     Blacklist = ProjectileAimbot:CreateTextList({
         Name = 'Blacklist',
-        Default = {'Telepearl', 'Gloop'}
+        Default = {'telepearl', 'glue_trap'}
     })
 end)
 	
@@ -8514,3 +8514,4 @@ run(function()
 		List = WinEffectName
 	})
 end)
+	
